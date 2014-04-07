@@ -71,5 +71,13 @@ for i in range(NUM_RUNS):
 			u_value = u_value * 0.5
 		v_value = cash + stock
 		difference = v_value - u_value
+	v_u_array.append(difference)
+array = numpy.array([v_u_array])
+sync_difference_mean = numpy.mean(array)
+sync_difference_std = numpy.std(array)/math.sqrt(NUM_RUNS-1)
+print "The mean is : " + str(sync_difference_mean)
+print "The 95 percent confidence interval is : "+ str(sync_difference_mean - 1.96 * sync_difference_std) + " to " + str(sync_difference_mean + 1.96 * sync_difference_std)
+
+#part d 
 
 

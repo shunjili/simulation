@@ -1,0 +1,59 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fourier}
+\author{Shunji Li, Ben Zheng, Erli Zhou}
+\title{MS$\&$E 223 Assignment 1}
+\begin{document}
+\maketitle
+\section*{Problem 2}
+\begin{itemize}
+\item[a] If $U_i$ follows a uniform distribution from 0 to 1, then its density $f(U_i) = 1$, then the expectation of $h(U_i)$ is 
+$$
+\int_{0}^1 f(U)h(U) dU = \int_0^1 h(U)
+$$
+Therefore, to estimate the expectation of $Z_i = h(U_i)$, we just need to sample $n$ $\, U_i$s and calcuate $h(U_i)$s average. 
+\item[b] Define $S_i = a + (b-a)U_i$, then $S_i$ follows a uniform distribution from $a$ to $b$. 
+\begin{align*}
+E(h(S_i)) &= \int_a^b \frac{1}{b-a} h(S) dS\\
+& = \frac{1}{b-a} \int_a^b h(S) dS
+\end{align*}
+Therefore the steps are :
+\begin{enumerate}
+\item Sample $U_i$ fro uniform distribution from 0 to 1
+\item Transform $S_i = a + (b-a)*U_i$ from the $U_i$s
+\item Calculate average $E(h(S_i)) = \frac{1}{n}\sum h(S_i)$
+\item Estimate the integral $\int_a^b h(x) dx = (b-a) E(h(S_i))$
+\end{enumerate}
+\item[c]
+Let $y = \frac{1}{x+1}$, then $x = \frac{1}{y} - 1$ then $dx = -\frac{1}{y^2}$, then the original integral can be transformed to 
+$$
+\int_1^0 h(\frac{1}{y}-1)(-\frac{1}{y^2}) dy 
+$$
+which the expectation of $h(\frac{1}{y}-1)(-\frac{1}{y^2})$ when we sample $y$ from a uniform distribution from 0 to 1. 
+\begin{enumerate}
+\item Sample $U_i$ fro uniform distribution from 0 to 1
+\item Transform $S_i = h(\frac{1}{y}-1)\frac{1}{y^2}$ from the $U_i$s
+\item Calculate average $E(S_i) = \frac{1}{n}\sum (S_i)$
+\item Estimate the integral $\int_0^\infty h(x) dx =E(S_i)$
+\end{enumerate}
+\item[d]
+\begin{enumerate}
+\item Sample $U_i$ and $V_i$ fro uniform distribution from 0 to 1
+\item Transform $S_i = e^{(U_i+V_i)^2}$ from the $U_i$s
+\item Calculate average $E(S_i) = \frac{1}{n} \sum (S_i)$
+\item Estimate the integral $\int_0^1\int_0^1 e^{(x+y)^2} dxdy =E(S_i)$
+\end{enumerate}	
+\item[e]
+define $g(x, y) = 1$ if $y < x$ and $0$ if $x < y$. 
+\begin{enumerate}
+\item Sample $U_i$ and $V_i$ fro uniform distribution from 0 to 1
+\item Transform $S_i = e^{(1/U_i+1/V_i-2)^2} \frac{1}{U_i^2}\frac{1}{V_i^2}$ from the $U_i$ and $V_i$s
+\item Calculate average $E(S_i) = \frac{1}{n} \sum (S_i)$
+\item Estimate the integral $\int_0^\infty\int_0^\infty g(x,y) e^{-(x+y)^2} dxdy =E(S_i)$
+\end{enumerate}	
+\end{itemize}
+\end{document}
