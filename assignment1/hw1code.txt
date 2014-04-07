@@ -1,0 +1,67 @@
+R is an open source version of the S statistical package, and 
+Octave is an open source version of the Matlab scientific
+computation package.
+
+The R and Octave packages can be downloaded from
+www.r-project.org and www.gnu.org/software/octave, respectively.
+
+==========================================
+R code
+
+#setup
+h <- function(x) { return (exp(-(x[1]-0.5)^2-(x[2]-0.5)^2))}
+d <- 2
+K <- 5
+N <- 150
+n <- N/K
+
+#standard Monte Carlo
+U <- matrix(runif(N*d),N,d)
+est <- apply(U,c(1),h)
+mean(est)
+sd(est)/sqrt(N)
+
+
+#alternative Monte Carlo
+est <- c()
+for (i in 1:n) {
+ U <- matrix(runif(K*d),K,d)
+ p <- matrix(c(sample(K),sample(K)),K,d)
+ V <- (p - U)/K
+ y <- mean(apply(V,c(1),h))
+ est <- c(est,y)
+}
+mean(est)
+sd(est)/sqrt(n)
+
+==========================================
+Matlab/Octave code
+
+%setup
+
+function out = h( x )
+out = exp(-(x(:,1)-0.5).*(x(:,1)-0.5)-(x(:,2)-0.5).*(x(:,2)-0.5));
+% the next line is needed for Octave but not Matlab
+endfunction
+
+d = 2;
+K = 5;
+N = 150;
+n = N/K;
+
+% Standard Monte Carlo
+U = rand(N,d);
+est = h(U);
+mean(est)
+std(est)/sqrt(N)
+
+% alternative Monte Carlo
+est = zeros(n,1);
+for i = 1:n
+  U = rand(K,d);
+  [x,p] = sort(rand(K,d));
+  V = (p - U)/K;
+  est(i) = mean(h(V));
+end
+mean(est)
+std(est)/sqrt(n)
